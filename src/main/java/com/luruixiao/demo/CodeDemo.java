@@ -8,7 +8,7 @@ public class CodeDemo {
 
     public static void main(String[] args) {
         int[] arr1 = {9};
-        int[] arr2 = {9,9,9,9,9,9,9,9,9,1};
+        int[] arr2 = {1,9,9,9,9,9,9,9,9,9};
         CodeTool.ListNode node1 = fillNode(arr1);
         CodeTool.ListNode node2 =  fillNode(arr2);
 //        CodeTool.ListNode node1 = new CodeTool.ListNode(2);
@@ -30,13 +30,24 @@ public class CodeDemo {
             node = node.next;
         }
     }
+
+    /**
+     * 尾插法
+     */
     private static CodeTool.ListNode fillNode(int[] arr) {
-        CodeTool.ListNode listNode = null;
+        CodeTool.ListNode newNode,header,tailer;
+        header = tailer = null;
         for (int i : arr) {
-            CodeTool.ListNode node = new CodeTool.ListNode(i);
-            node.next = listNode;
-            listNode = node;
+            newNode = new CodeTool.ListNode(i);
+            if (header == null) {//头永远不动
+                header = tailer = newNode;
+            } else {
+                //将新节点连接到链表的尾部
+                tailer.next = newNode;
+                //tailer永远存储最后一个节点的地址
+                tailer = newNode;
+            }
         }
-        return listNode;
+        return header;
     }
 }

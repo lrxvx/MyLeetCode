@@ -60,60 +60,71 @@ public class CodeTool {
         public ListNode next;
         public ListNode(int x) { val = x; }
     }
+
+    /**
+     *给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+     *
+     * 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
+     *
+     * 您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+     *
+     * 示例：
+     *
+     * 输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
+     * 输出：7 -> 0 -> 8
+     * 原因：342 + 465 = 807
+     *
+     * 使用统计数值再转变成链表不行，数据类型长度不够
+     * 使用对应的位置进行计算，按照10进制，建立一个新的链表
+     */
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
-        ListNode r = null;
-//        int val1 = l1.val;
-//        int n1 = 10;
-//        ListNode node = l1.next;
-//        while (node != null) {
-//            val1 = node.val * n1 + val1;
-//            n1 = n1 * 10;
-//            node = node.next;
-//        }
-        int val1 = 0;
-        int n1 = 1;
-        ListNode node1 = l1;
-        ArrayList<Integer> node1Arr = new ArrayList<>();
-        while (node1 != null) {
-            node1Arr.add(node1.val);
-            node1 = node1.next;
-        }
-        for (Integer rs : node1Arr) {
-            val1 = val1 + rs * n1;
-            n1 = n1 * 10;
-        }
+        ListNode newNode,header,tailer;
+        header = tailer = null;
 
-        int val2 = 0;
-        int n2 = 1;
-        ListNode node2 = l2;
-        ArrayList<Integer> node2Arr = new ArrayList<>();
-        while (node2 != null) {
-            node2Arr.add(node2.val);
-            node2 = node2.next;
+        boolean flag = false;//记录是否存在进位情况，有进位则下一次加一
+        while (l1 != null || l2 != null) {
+            int val1 = 0;
+            int val2 = 0;
+            if (l1 != null) {
+                val1 = l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                val2 = l2.val;
+                l2 = l2.next;
+            }
+            int rs = val1 + val2;
+            if (flag) {
+                rs++;
+                flag = false;
+            }
+            if (rs < 10) {
+                newNode = new ListNode(rs);
+            } else {
+                newNode = new ListNode(rs-10);
+                flag = true;
+            }
+            if (header == null) {//头永远不动
+                header = tailer = newNode;
+            } else {
+                //将新节点连接到链表的尾部
+                tailer.next = newNode;
+                //tailer永远存储最后一个节点的地址
+                tailer = newNode;
+            }
         }
-        for (Integer rs : node2Arr) {
-            System.out.println("rs = " + rs + " val2 = " + val2 + " n2 = " + n2);
-            val2 = val2 + rs * n2;
-            System.out.println("val2 = " + val2);
-            n2 = n2 * 10;
+        if (flag) {//最后一位都有进位时单独添加一个节点
+            newNode  = new ListNode(1);
+            if (header == null) {//头永远不动
+                header = newNode;
+            } else {
+                //将新节点连接到链表的尾部
+                tailer.next = newNode;
+                //tailer永远存储最后一个节点的地址
+                tailer = newNode;
+            }
         }
-        System.out.println( " val2 = " + val2 + " n2 = " + n2);
-
-        int result =  val1 + val2;
-        System.out.println(val1 + " + " + val2 + " = " + result);
-        ArrayList<Integer> integers = new ArrayList<>();
-        while (result >= 10) {
-            int num = result % 10;
-            result = result / 10;
-            integers.add(num);
-        }
-        integers.add(result);
-        for (int i = integers.size()-1;i >= 0;i--) {
-            ListNode s = new ListNode(integers.get(i));
-            s.next = r;
-            r = s;
-        }
-        return r;
+        return header;
     }
 }
