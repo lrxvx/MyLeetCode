@@ -206,4 +206,86 @@ public class CodeTool {
         max = max < hashMap.size() ? hashMap.size() : max;
         return max;
     }
+
+    /**
+     * 题4 给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。
+     *
+     * 请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。
+     *
+     * 你可以假设 nums1 和 nums2 不会同时为空。
+     *
+     * 示例 1:
+     *
+     * nums1 = [1, 3]
+     * nums2 = [2]
+     *
+     * 则中位数是 2.0
+     * 示例 2:
+     *
+     * nums1 = [1, 2]
+     * nums2 = [3, 4]
+     *
+     * 则中位数是 (2 + 3)/2 = 2.5
+     *
+     * 解法：根据数组长度知道中位数的位置，因为单个数组有序，则一个一个按照大小获取，直到中位数的位置
+     */
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int rsLength = nums1.length + nums2.length;
+        //不从零开始
+        int middle1 = (rsLength / 2) + 1;
+        double rs1 = 0.0;
+        double rs2 = 0.0;
+        int count = 0;
+        int index1 = 0,index2 = 0;//两个数组的移动下标位置
+        while(true) {
+            rs1 = rs2;
+            if (index1 >= nums1.length) {
+                rs2 = nums2[index2];
+                index2++;
+                count++;
+            } else if(index2 >= nums2.length) {
+                rs2 = nums1[index1];
+                index1++;//nums1进1
+                count++;
+            } else if (nums1[index1] < nums2[index2]) {
+                rs2 = nums1[index1];
+                index1++;//nums1进1
+                count++;
+            } else {
+                rs2 = nums2[index2];
+                index2++;
+                count++;
+            }
+            if (count == middle1) {
+                break;
+            }
+        }
+        if (rsLength % 2 == 0) {//中位数需要两个数计算
+            return (rs1 + rs2) / 2.0;
+        }
+        return rs2;
+    }
+
+    /**
+     * 获取一个有序数组中的中位数
+     */
+    private static double getMiddle1Arr(int[] nums1) {
+        double middle1;
+        if (nums1 == null || nums1.length == 0) {
+            middle1 = 0.0;
+        } else if (nums1.length == 1) {
+            middle1 = nums1[0];
+        } else {
+            if (nums1.length % 2 == 0) {//偶数个
+                int index1 = (nums1.length / 2) - 1;
+                int index2 = nums1.length / 2;
+                middle1 = ((nums1[index1] + nums1[index2]) * 1.0) / 2.0;
+            } else {
+                int index2 = nums1.length / 2;
+                middle1 = nums1[index2];
+            }
+        }
+        System.out.println("中位数="+middle1);
+        return middle1;
+    }
 }

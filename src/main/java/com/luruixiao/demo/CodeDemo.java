@@ -50,9 +50,20 @@ public class CodeDemo {
         return header;
     }
 
+    /**
+     * 题3
+     */
     @Test
     public void Test3() {
-        int num = CodeTool.lengthOfLongestSubstring3("abcabcbb");
+        int num = CodeTool.lengthOfLongestSubstring2("abcabcbb");
         System.out.println(num);
     }
+
+    @Test
+    public void Test4() {
+        int num1[] = {1};
+        int num2[] = {3,4,5,6,7};
+        System.out.println(CodeTool.findMedianSortedArrays(num1, num2));
+    }
+
 }
