@@ -1,23 +1,22 @@
 package com.luruixiao.demo;
 
 import com.luruixiao.code.CodeTool;
+import org.junit.Test;
 
 /**
+ *
  */
 public class CodeDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 题2
+     */
+    @Test
+    public void Test2(){
         int[] arr1 = {9};
         int[] arr2 = {1,9,9,9,9,9,9,9,9,9};
         CodeTool.ListNode node1 = fillNode(arr1);
         CodeTool.ListNode node2 =  fillNode(arr2);
-//        CodeTool.ListNode node1 = new CodeTool.ListNode(2);
-//        node1.next = new CodeTool.ListNode(4);
-//        node1.next.next = new CodeTool.ListNode(3);
-//
-//        CodeTool.ListNode node2 = new CodeTool.ListNode(5);
-//        node2.next = new CodeTool.ListNode(6);
-//        node2.next.next = new CodeTool.ListNode(4);
 
         CodeTool.ListNode node = CodeTool.addTwoNumbers(node1, node2);
         while (node2!=null) {
@@ -49,5 +48,11 @@ public class CodeDemo {
             }
         }
         return header;
+    }
+
+    @Test
+    public void Test3() {
+        int num = CodeTool.lengthOfLongestSubstring3("abcabcbb");
+        System.out.println(num);
     }
 }
