@@ -1,7 +1,10 @@
 package com.luruixiao.code;
 
+import com.sun.javafx.application.HostServicesDelegate;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 力扣的算法题
@@ -287,5 +290,67 @@ public class CodeTool {
         }
         System.out.println("中位数="+middle1);
         return middle1;
+    }
+
+    /**
+     * 给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
+     *
+     * 示例：
+     *
+     * 给定一个链表: 1->2->3->4->5, 和 n = 2.
+     *
+     * 当删除了倒数第二个节点后，链表变为 1->2->3->5.
+     * 说明：
+     *
+     * 给定的 n 保证是有效的。
+     *
+     * 进阶：
+     * 使用一趟扫描实现
+     */
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        ArrayList<Integer> nodeList = new ArrayList<>();
+        while (head != null) {
+            nodeList.add(head.val);
+            head = head.next;
+        }
+        ListNode newNode,header,tailer;
+        header = tailer = null;
+        for (int i = 0;i < nodeList.size();++i) {
+            if ((nodeList.size() - n) != i) {
+                newNode = new ListNode(nodeList.get(i));
+                if (header == null) {//头永远不动
+                    header = tailer = newNode;
+                } else {
+                    //将新节点连接到链表的尾部
+                    tailer.next = newNode;
+                    //tailer永远存储最后一个节点的地址
+                    tailer = newNode;
+                }
+            }
+        }
+        return header;
+    }
+
+    /**
+     * 优化 一次扫描
+     * 前后两个节点 相距n个距离
+     */
+    public static ListNode removeNthFromEnd2(ListNode head, int n) {
+        ListNode first = head,second = head,tmp = head;
+        while (first != null) {
+            if (n < 1) {
+                tmp = second;
+                second = second.next;
+            }
+            first = first.next;
+            n--;
+        }
+        if (second == head) {
+            head = head.next;
+        } else {
+            tmp.next = second.next;
+            second = tmp;
+        }
+        return head;
     }
 }

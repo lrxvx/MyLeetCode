@@ -66,4 +66,18 @@ public class CodeDemo {
         System.out.println(CodeTool.findMedianSortedArrays(num1, num2));
     }
 
+    /**
+     * 题 19
+     */
+    @Test
+    public void Test19() {
+        int[] arr2 = {1};
+//        int[] arr2 = {1,2,3,4,5};
+        CodeTool.ListNode node1 = fillNode(arr2);
+        CodeTool.ListNode node = CodeTool.removeNthFromEnd2(node1, 1);
+        while (node != null) {
+            System.out.print(node.val + " ");
+            node = node.next;
+        }
+    }
 }
