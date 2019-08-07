@@ -330,7 +330,6 @@ public class CodeTool {
         }
         return header;
     }
-
     /**
      * 优化 一次扫描
      * 前后两个节点 相距n个距离
@@ -352,5 +351,57 @@ public class CodeTool {
             second = tmp;
         }
         return head;
+    }
+
+    /**
+     * 合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。
+     *
+     * 示例:
+     *
+     * 输入:
+     * [
+     *   1->4->5,
+     *   1->3->4,
+     *   2->6
+     * ]
+     * 输出: 1->1->2->3->4->4->5->6
+     */
+    public static ListNode mergeKLists(ListNode[] lists) {
+        if (lists.length == 0) {
+            return null;
+        } else if(lists.length == 1) {
+            return lists[0];
+        } else if(lists.length == 2) {
+            return mergeSortListNode(lists[0],lists[1]);
+        }
+        int middle = lists.length / 2;
+        ListNode[] ln1 = new ListNode[middle];
+        ListNode[] ln2 = new ListNode[lists.length - middle];
+        System.arraycopy(lists, 0, ln1, 0, middle);
+        for (int i = middle,j = 0;i < lists.length; i++,j++) {
+            ln2[j] = lists[i];
+        }
+        return mergeSortListNode(mergeKLists(ln1),mergeKLists(ln2));
+    }
+
+    /**
+     * 链表归并算法
+     */
+    public static ListNode mergeSortListNode(ListNode listNode1, ListNode listNode2) {
+        if (listNode1 == null) {
+            return listNode2;
+        }
+        if (listNode2 == null) {
+            return listNode1;
+        }
+        ListNode header = null;
+        if (listNode1.val <= listNode2.val) {
+            header = listNode1;
+            header.next = mergeSortListNode(listNode1.next, listNode2);
+        } else {
+            header = listNode2;
+            header.next = mergeSortListNode(listNode2.next, listNode1);
+        }
+        return header;
     }
 }

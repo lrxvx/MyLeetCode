@@ -80,4 +80,23 @@ public class CodeDemo {
             node = node.next;
         }
     }
+
+    /**
+     * 题 23
+     */
+    @Test
+    public void Test23() {
+        int[] arr1 = {1,4,5};
+        int[] arr2 = {1,3,4};
+        int[] arr3 = {2,6};
+        CodeTool.ListNode node1 = fillNode(arr1);
+        CodeTool.ListNode node2 = fillNode(arr2);
+        CodeTool.ListNode node3 = fillNode(arr3);
+        CodeTool.ListNode[] nodes = {node1,node2,node3};
+        CodeTool.ListNode node = CodeTool.mergeKLists(nodes);
+        while (node != null) {
+            System.out.print(node.val + " ");
+            node = node.next;
+        }
+    }
 }
