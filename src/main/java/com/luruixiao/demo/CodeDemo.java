@@ -99,4 +99,12 @@ public class CodeDemo {
             node = node.next;
         }
     }
+
+    /**
+     * 题 71
+     */
+    @Test
+    public void Test71() {
+        System.out.println(CodeTool.simplifyPath("/a//b////c/d//././/.."));
+    }
 }
