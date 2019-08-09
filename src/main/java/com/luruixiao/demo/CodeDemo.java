@@ -3,6 +3,8 @@ package com.luruixiao.demo;
 import com.luruixiao.code.CodeTool;
 import org.junit.Test;
 
+import java.util.List;
+
 /**
  *
  */
@@ -106,5 +108,20 @@ public class CodeDemo {
     @Test
     public void Test71() {
         System.out.println(CodeTool.simplifyPath("/a//b////c/d//././/.."));
+    }
+
+    @Test
+    public void Test94() {
+        CodeTool.TreeNode treeNode1 = new CodeTool.TreeNode(1);
+        CodeTool.TreeNode treeNode2 = new CodeTool.TreeNode(2);
+        CodeTool.TreeNode treeNode3 = new CodeTool.TreeNode(3);
+        treeNode1.left = null;
+        treeNode1.right = treeNode2;
+        treeNode2.left = treeNode3;
+
+        List<Integer> integers = CodeTool.inorderTraversal(treeNode1);
+        for (Integer integer : integers) {
+            System.out.println(integer);
+        }
     }
 }

@@ -453,4 +453,40 @@ public class CodeTool {
         }
         return rsPath.toString();
     }
+
+    public static class TreeNode {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int x) { val = x; }
+    }
+
+    /**
+     * 题94
+     * 给定一个二叉树，返回它的中序 遍历。
+     *
+     * 示例:
+     *
+     * 输入: [1,null,2,3]
+     *    1
+     *     \
+     *      2
+     *     /
+     *    3
+     *
+     * 输出: [1,3,2]
+     */
+    public static List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> arrayList = new ArrayList<>();
+        inorderTree(root,arrayList);
+        return arrayList;
+    }
+
+    public static void inorderTree(TreeNode root,List<Integer> arrayList) {
+        if(root != null) {
+            inorderTree(root.left, arrayList);
+            arrayList.add(root.val);
+            inorderTree(root.right, arrayList);
+        }
+    }
 }
