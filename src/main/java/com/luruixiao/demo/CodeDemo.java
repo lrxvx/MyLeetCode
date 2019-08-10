@@ -124,4 +124,17 @@ public class CodeDemo {
             System.out.println(integer);
         }
     }
+
+
+    @Test
+    public void Test95() {
+        List<CodeTool.TreeNode> treeNodes = CodeTool.generateTrees(3);
+        for (CodeTool.TreeNode treeNode : treeNodes) {
+            List<Integer> list = CodeTool.preorderTraversal(treeNode);
+            for (Integer integer : list) {
+                System.out.print(integer+ " ");
+            }
+            System.out.println();
+        }
+    }
 }

@@ -489,4 +489,67 @@ public class CodeTool {
             inorderTree(root.right, arrayList);
         }
     }
+
+    /**
+     * 先序遍历
+     */
+    public static List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> arrayList = new ArrayList<>();
+        preorderTree(root,arrayList);
+        return arrayList;
+    }
+
+    public static void preorderTree(TreeNode root,List<Integer> arrayList) {
+        if(root != null) {
+            arrayList.add(root.val);
+            inorderTree(root.left, arrayList);
+            inorderTree(root.right, arrayList);
+        }
+    }
+
+    /**
+     * 这题不太会
+     * 题95
+     * 给定一个整数 n，生成所有由 1 ... n 为节点所组成的二叉搜索树。
+     *
+     * 示例:
+     *
+     * 输入: 3
+     * 输出:
+     * [
+     *   [1,null,3,2],
+     *   [3,2,null,1],
+     *   [3,1,null,null,2],
+     *   [2,1,3],
+     *   [1,null,2,null,3]
+     * ]
+     */
+    public static List<TreeNode> generateTrees(int n) {
+        if (n <= 0) {
+            return new ArrayList<TreeNode>();
+        }
+        return generate_tree(1,n);
+    }
+
+    public static List<TreeNode> generate_tree(int start, int end) {
+        List<TreeNode> allNodeList = new ArrayList<>();
+        if (start > end) {
+            allNodeList.add(null);
+            return allNodeList;
+        }
+        for (int i = start;i <= end; i++) {
+            List<TreeNode> leftNodeList = generate_tree(start, i - 1);
+            List<TreeNode> rightNodeList = generate_tree(i + 1, end);
+
+            for (TreeNode leftNode : leftNodeList) {
+                for (TreeNode rightNode : rightNodeList) {
+                    TreeNode currentTreeNode = new TreeNode(i);
+                    currentTreeNode.left = leftNode;
+                    currentTreeNode.right = rightNode;
+                    allNodeList.add(currentTreeNode);
+                }
+            }
+        }
+        return allNodeList;
+    }
 }
