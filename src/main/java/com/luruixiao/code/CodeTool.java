@@ -1,11 +1,10 @@
 package com.luruixiao.code;
 
+import com.luruixiao.structure.ch11.Tree;
 import com.sun.javafx.application.HostServicesDelegate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 力扣的算法题
@@ -551,5 +550,75 @@ public class CodeTool {
             }
         }
         return allNodeList;
+    }
+
+    /**
+     * 题102 二叉树层次遍历
+     * 给定一个二叉树，返回其按层次遍历的节点值。 （即逐层地，从左到右访问所有节点）。
+     */
+    public static List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> rsList = new ArrayList<>();
+        Map<Integer,List<Integer>> rsListMap = new HashMap<>();
+        LinkedBlockingQueue<TreeNode> treeNodeQueue = new LinkedBlockingQueue<>();
+        try {
+            treeNodeQueue.put(root);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        int n = levelTreePrint(1, treeNodeQueue, rsListMap);
+        System.out.println("层数 = " + n);
+        for (int i = 1;i <= n;++i) {
+            List<Integer> list = rsListMap.get(i);
+            if (list != null) {
+               rsList.add(list);
+            }
+        }
+        for (Map.Entry<Integer, List<Integer>> entry : rsListMap.entrySet()) {
+            List<Integer> value = entry.getValue();
+            System.out.print(entry.getKey() + " 层---");
+            for (Integer i : value) {
+                System.out.print(i);
+            }
+            System.out.println("-----------------");
+        }
+        return rsList;
+    }
+
+    /**
+     * 二叉树层次遍历
+     * @param n             层数
+     * @param treeNodeQueue 队列
+     * @param rsListMap     map<层数,list></>
+     * @return              层数
+     */
+    public static int levelTreePrint(int n,LinkedBlockingQueue<TreeNode> treeNodeQueue, Map<Integer,List<Integer>> rsListMap) {
+        if (treeNodeQueue.isEmpty()) {
+            return n;
+        }
+        List<Integer> list = null;
+        if (rsListMap.containsKey(n)) {
+            list = rsListMap.get(n);
+        } else {
+            list = new ArrayList<>();
+            rsListMap.put(n, list);
+        }
+        TreeNode poll = null;
+        try {
+            poll = treeNodeQueue.take();
+            list.add(poll.val);
+            System.out.println(n+ "层-------"+poll.val);
+            if (poll.left != null) {
+                treeNodeQueue.put(poll.left);
+            }
+            if (poll.right != null) {
+                treeNodeQueue.put(poll.right);
+            }
+            if (!treeNodeQueue.isEmpty()) {
+                levelTreePrint(n+1, treeNodeQueue,rsListMap);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return n + 1;
     }
 }

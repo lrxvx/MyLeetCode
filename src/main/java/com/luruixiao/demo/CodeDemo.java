@@ -137,4 +137,34 @@ public class CodeDemo {
             System.out.println();
         }
     }
+
+    @Test
+    public void Test102() {
+        CodeTool.TreeNode treeNode1 = new CodeTool.TreeNode(1);
+        CodeTool.TreeNode treeNode2 = new CodeTool.TreeNode(2);
+        CodeTool.TreeNode treeNode3 = new CodeTool.TreeNode(3);
+        CodeTool.TreeNode treeNode4 = new CodeTool.TreeNode(6);
+        CodeTool.TreeNode treeNode5 = new CodeTool.TreeNode(8);
+        CodeTool.TreeNode treeNode6 = new CodeTool.TreeNode(3);
+        CodeTool.TreeNode treeNode7 = new CodeTool.TreeNode(7);
+        treeNode1.left = null;
+        treeNode1.right = treeNode2;
+        treeNode2.left = treeNode3;
+        treeNode3.left = treeNode5;
+        treeNode3.right = treeNode7;
+
+        /**
+         *          1
+         *        2   3
+         *          8   7
+         */
+        System.out.println("==========================");
+        List<List<Integer>> lists = CodeTool.levelOrder(treeNode1);
+        for (List<Integer> list : lists) {
+            for (Integer integer : list) {
+                System.out.print("结 果   "+ integer);
+            }
+            System.out.println();
+        }
+    }
 }
