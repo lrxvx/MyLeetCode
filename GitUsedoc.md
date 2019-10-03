@@ -23,6 +23,9 @@
 
 * 在指定目录下 git init
 * 直接从远程仓库中克隆一个仓库下来 git clone ....git
+SSH 远程仓库
+ssh-keygen -t rsa -C "邮箱"
+将~/.ssh/id_rsa.pub中的内容添加在GitHub setting ssh key中
 
 ## 3、Git操作命令
 
