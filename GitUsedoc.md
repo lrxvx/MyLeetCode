@@ -34,6 +34,7 @@ ssh-keygen -t rsa -C "邮箱"
 ```
 git status 查看仓库状态
 git add file 添加文件到暂存区
+git add . 添加目录下所有文件
 git commit -m "" 提交到本地仓库
 git commit -am "" 添加提交，前提是已存在仓库中的文件
 git commit --amend  修改备注
